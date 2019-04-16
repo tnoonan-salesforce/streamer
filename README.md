@@ -25,22 +25,23 @@ USAGE
 ...
 ```
 <!-- commands -->
-* [`sfdx channel:stream [CHANNEL]`](#sfdx-channelstream-channel)
+* [`sfdx channel:stream [-r <integer>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal]`](#sfdx-channelstream--r-integer--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfatal)
 
-## `sfdx channel:stream [CHANNEL]`
+## `sfdx channel:stream [-r <integer>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal]`
 
 stream platform or streaming events to the console via a channel
 
 ```
 USAGE
-  $ sfdx channel:stream [CHANNEL]
+  $ sfdx channel:stream [-r <integer>] [-u <string>] [--apiversion <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal]
 
 OPTIONS
   -r, --replayid=replayid                         a replayId to replay events from
   -u, --targetusername=targetusername             username or alias for the target org; overrides default target org
   --apiversion=apiversion                         override the api version used for api requests made by this command
   --json                                          format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  --loglevel=(trace|debug|info|warn|error|fatal)  [default: warn] logging level for this command invocation
 
 EXAMPLE
   sfdx channel:stream /event/MyEvent__e -u de -r 20

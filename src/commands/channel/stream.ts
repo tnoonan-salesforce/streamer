@@ -1,5 +1,6 @@
 import {core, flags, SfdxCommand} from '@salesforce/command';
-import { DefaultStreamingOptions, StatusResult, StreamingClient, Time, TIME_UNIT } from '@salesforce/core';
+import { StatusResult, StreamingClient } from '@salesforce/core';
+import { Duration } from '@salesforce/kit';
 import {AnyJson, isNumber, JsonMap} from '@salesforce/ts-types';
 
 // Initialize Messages with the current plugin directory
@@ -29,10 +30,10 @@ export class Streamer extends SfdxCommand {
   }
 
   public async getClient() {
-    const options = new DefaultStreamingOptions(this.org, this.args.channel, this.streamProcessor.bind(this));
-    const time = new Time(30, TIME_UNIT.MINUTES);
+    const options = new StreamingClient.DefaultOptions(this.org, this.args.channel, this.streamProcessor.bind(this));
+    const time = Duration.minutes(30);
     options.setSubscribeTimeout(time);
-    return await StreamingClient.init(options);
+    return StreamingClient.create(options);
   }
 
   private async steamEvent() {
@@ -47,7 +48,7 @@ export class Streamer extends SfdxCommand {
     await asyncStatusClient.subscribe(async () => {});
   }
 
-  private streamProcessor = (message: JsonMap): StatusResult<string> => {
+  private streamProcessor = (message: JsonMap): StatusResult => {
     this.ux.logJson(message);
     return { completed: false };
   };
